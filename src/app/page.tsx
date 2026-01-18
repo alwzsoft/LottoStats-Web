@@ -349,31 +349,60 @@ export default function LottoPage() {
           </div>
         )}
 
-        {/* 추천 번호 애니메이션 */}
+        {/* 추천 번호 애니메이션 - Circuit Board Flow */}
         {recommendation && !showingAd && (
-          <div className="bg-white rounded-2xl shadow-xl p-6 mb-4">
-            {/* 추천 번호 타이틀 */}
-            <div className="text-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-800">🎉 추천 번호 🎉</h2>
+          <div className="bg-white rounded-2xl shadow-xl p-6 mb-4 relative overflow-hidden">
+            {/* 배경 회로 패턴 */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="animate-circuit-connect absolute inset-0"></div>
             </div>
-            {/* 번호들 - 2줄 레이아웃 (위 3개, 아래 3개) */}
-            <div className="grid grid-cols-3 gap-4 sm:gap-6 place-items-center">
+
+            {/* 추천 번호 타이틀 */}
+            <div className="text-center mb-6 relative z-10">
+              <h2 className="text-2xl font-bold text-gray-800 animate-circuit-spark">🎉 추천 번호 🎉</h2>
+            </div>
+
+            {/* 번호들 - Circuit Board 레이아웃 */}
+            <div className="grid grid-cols-3 gap-4 sm:gap-6 place-items-center relative z-10">
               {recommendation.numbers.map((num, index) => (
-                <div
-                  key={index}
-                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center font-bold text-2xl sm:text-3xl text-white shadow-2xl transform transition-all duration-700 ${
-                    visibleNumbers.includes(num)
-                      ? `${getNumberColor(num)} scale-110 animate-bounce`
-                      : 'bg-gray-300'
-                  }`}
-                  style={{
-                    animationDelay: visibleNumbers.includes(num) ? `${index * 0.2}s` : '0s'
-                  }}
-                >
-                  {visibleNumbers.includes(num) ? num : '?'}
+                <div key={index} className="relative">
+                  {/* 회로 연결 라인 효과 */}
+                  {visibleNumbers.includes(num) && (
+                    <div className="absolute inset-0 rounded-full border-2 border-blue-400 animate-circuit-pulse"></div>
+                  )}
+
+                  {/* 번호 원 */}
+                  <div
+                    className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center font-bold text-2xl sm:text-3xl text-white shadow-2xl transform transition-all duration-700 relative z-10 ${
+                      visibleNumbers.includes(num)
+                        ? `${getNumberColor(num)} scale-110 animate-circuit-spark`
+                        : 'bg-gray-300'
+                    }`}
+                    style={{
+                      animationDelay: visibleNumbers.includes(num) ? `${index * 0.8}s` : '0s'
+                    }}
+                  >
+                    {visibleNumbers.includes(num) ? (
+                      <span className="relative">
+                        {num}
+                        {/* 스파크 효과 */}
+                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
+                      </span>
+                    ) : '?'}
+                  </div>
+
+                  {/* 전기 흐름 효과 */}
+                  {visibleNumbers.includes(num) && (
+                    <div className="absolute inset-0 rounded-full border border-blue-300 animate-pulse opacity-50"></div>
+                  )}
                 </div>
               ))}
             </div>
+
+            {/* 최종 플래시 효과 */}
+            {visibleNumbers.length === recommendation.numbers.length && (
+              <div className="absolute inset-0 bg-blue-400 opacity-10 animate-pulse pointer-events-none"></div>
+            )}
           </div>
         )}
 

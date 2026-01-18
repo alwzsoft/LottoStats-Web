@@ -35,3 +35,64 @@
 .animate-fade-in {
   animation: fade-in 0.5s ease-out;
 }
+
+/* Circuit Board Flow 애니메이션 */
+@keyframes circuit-pulse {
+  0% {
+    transform: scale(0.8);
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+    border-color: rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0),
+                0 0 0 20px rgba(59, 130, 246, 0.3),
+                0 0 0 30px rgba(59, 130, 246, 0);
+    border-color: rgba(59, 130, 246, 0.8);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+    border-color: rgba(59, 130, 246, 0.5);
+  }
+}
+
+@keyframes circuit-spark {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes circuit-connect {
+  0% {
+    background: linear-gradient(45deg, transparent 30%, rgba(59, 130, 246, 0.3) 50%, transparent 70%);
+    background-size: 200% 200%;
+    background-position: -100% 0;
+  }
+  100% {
+    background: linear-gradient(45deg, transparent 30%, rgba(59, 130, 246, 0.3) 50%, transparent 70%);
+    background-size: 200% 200%;
+    background-position: 100% 0;
+  }
+}
+
+.animate-circuit-pulse {
+  animation: circuit-pulse 1.5s ease-out;
+}
+
+.animate-circuit-spark {
+  animation: circuit-spark 0.6s ease-out;
+}
+
+.animate-circuit-connect {
+  animation: circuit-connect 2s linear infinite;
+}
