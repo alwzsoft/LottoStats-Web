@@ -28,6 +28,7 @@ export default function LottoPage() {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [counters, setCounters] = useState({
     totalDraws: 0,
+    samples: 0,
     numbersOut: 0,
     accuracy: 0,
     progressWidth: 0
@@ -79,7 +80,8 @@ export default function LottoPage() {
         const easeOutProgress = 1 - Math.pow(1 - progress, 3);
 
         setCounters({
-          totalDraws: Math.floor((targetTotalDraws * 48) * easeOutProgress), // Samples 애니메이션
+          totalDraws: Math.floor(targetTotalDraws * easeOutProgress), // Draw 애니메이션
+          samples: Math.floor((targetTotalDraws * 45) * easeOutProgress), // Samples 애니메이션
           numbersOut: Math.floor((targetTotalDraws * 6) * easeOutProgress),  // Numbers 애니메이션
           accuracy: targetAccuracy * easeOutProgress,
           progressWidth: 100 * easeOutProgress
@@ -89,7 +91,8 @@ export default function LottoPage() {
           clearInterval(timer);
           // 최종 값 설정
           setCounters({
-            totalDraws: targetTotalDraws * 48, // Samples: 회차 × 48
+            totalDraws: targetTotalDraws, // Draw: 회차
+            samples: targetTotalDraws * 45, // Samples: 회차 × 45
             numbersOut: targetTotalDraws * 6,  // Numbers: 회차 × 6
             accuracy: targetAccuracy,
             progressWidth: 100
@@ -266,7 +269,7 @@ export default function LottoPage() {
               <div className="grid grid-cols-3 gap-2 text-center">
                 <div>
                   <p className="text-[8px] text-gray-500 uppercase mb-1">Samples</p>
-                  <p className="text-sm font-mono font-bold text-blue-600">{counters.totalDraws.toLocaleString()}</p>
+                  <p className="text-sm font-mono font-bold text-blue-600">{counters.samples.toLocaleString()}</p>
                 </div>
                 <div>
                   <p className="text-[8px] text-gray-500 uppercase mb-1">Numbers</p>
