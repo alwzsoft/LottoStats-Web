@@ -85,12 +85,27 @@
   }
 }
 
+@keyframes slow-spark {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
 .animate-circuit-pulse {
   animation: circuit-pulse 1.5s ease-out;
 }
 
 .animate-circuit-spark {
   animation: circuit-spark 0.6s ease-out;
+}
+
+.animate-slow-spark {
+  animation: slow-spark 2s ease-in-out infinite;
 }
 
 .animate-circuit-connect {

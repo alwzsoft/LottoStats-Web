@@ -385,7 +385,7 @@ export default function LottoPage() {
                     {/* 스파크 효과 - 번호 뒤에 배치 */}
                     {visibleNumbers.includes(num) && (
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-full animate-ping opacity-80 shadow-2xl"></div>
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-full animate-slow-spark opacity-80 shadow-2xl"></div>
                       </div>
                     )}
 
