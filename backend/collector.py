@@ -2,6 +2,7 @@ import requests
 import json
 from collections import Counter
 import os
+import time
 from datetime import datetime
 from bs4 import BeautifulSoup
 
@@ -9,8 +10,11 @@ def get_latest_draw():
     """최신 회차 번호 가져오기"""
     # 동행복권 결과 페이지에서 최신 회차 파싱
     url = "https://www.dhlottery.co.kr/gameResult.do?method=byWin"
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    }
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers=headers)
         soup = BeautifulSoup(response.text, 'html.parser')
         # 회차 정보 찾기: <div class="win_result"> 안에 <h4>제 XXX회 당첨결과</h4>
         win_result = soup.find('div', class_='win_result')
@@ -30,6 +34,11 @@ def get_latest_draw():
 def collect_lotto_data():
     """전체 로또 데이터 수집 및 저장 (증분 업데이트)"""
     latest_draw = get_latest_draw()
+    if latest_draw is None:
+        # 동행복권 페이지 파싱 실패 시 기본값 (또는 API 결과 등으로 보완 가능)
+        latest_draw = 1155 # 예시 최신 회차
+        print(f"최신 회차 파싱 실패로 기본값 {latest_draw} 사용")
+
     all_draws = []
     all_numbers = []
 
@@ -63,10 +72,16 @@ def collect_lotto_data():
     if start_draw <= latest_draw:
         print(f"신규 데이터 수집: {start_draw}회 ~ {latest_draw}회")
 
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        }
         for i in range(start_draw, latest_draw + 1):
             url = f"https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo={i}"
             try:
-                res = requests.get(url).json()
+                # 0.1초 지연으로 차단 방지
+                time.sleep(0.1)
+                response = requests.get(url, headers=headers)
+                res = response.json()
 
                 if res.get("returnValue") == "success":
                     draw_data = {
@@ -103,9 +118,17 @@ def collect_lotto_data():
     with open('lotto_stats.json', 'w', encoding='utf-8') as f:
         json.dump(stats, f, ensure_ascii=False, indent=2)
 
-    # 웹사이트 public 폴더에 복사 (수동으로 실행)
-    print("웹사이트 업데이트를 위해 다음 명령어 실행:")
-    print("cp lotto_stats.json ../lotto-web/public/")
+    # 웹사이트 public 폴더에 자동 복사
+    try:
+        # 프로젝트 루트의 public 폴더와 빌드 결과물 docs 폴더 모두 업데이트
+        paths = ['../public/lotto_stats.json', '../docs/lotto_stats.json']
+        for path in paths:
+            if os.path.exists(os.path.dirname(os.path.abspath(os.path.join(os.getcwd(), path)))):
+                with open(os.path.join(os.getcwd(), path), 'w', encoding='utf-8') as f:
+                    json.dump(stats, f, ensure_ascii=False, indent=2)
+                print(f"웹사이트 경로 업데이트 완료: {path}")
+    except Exception as e:
+        print(f"웹사이트 경로 업데이트 실패: {e}")
 
     print(f"데이터 수집 완료: 총 {len(all_draws)}회차 (신규 {latest_draw - last_draw}회차)")
     return stats
