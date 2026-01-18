@@ -2,8 +2,9 @@
 const nextConfig = {
   output: 'export',
   distDir: 'docs',
-  // basePath: '/LottoStats-Web', // 로컬 테스트용으로 주석 처리
-  // assetPrefix: 'https://alwzsoft.github.io/LottoStats-Web/', // 로컬 테스트용으로 주석 처리
+  basePath: '/LottoStats-Web',
+  assetPrefix: 'https://alwzsoft.github.io/LottoStats-Web/',
+  trailingSlash: true,
   images: {
     unoptimized: true,
   },
