@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',      // 정적 HTML 추출 모드
-  distDir: 'docs',       // 빌드 결과물을 out 대신 docs 폴더에 생성
-  basePath: '/LottoStats-Web',
+  output: 'export',
+  distDir: 'docs',
+  // GitHub Pages 저장소 이름에 맞게 설정
+  basePath: '/LottoStats-Web', 
+  assetPrefix: '/LottoStats-Web/', // 이 줄을 추가하세요! (끝에 / 포함)
   images: {
     unoptimized: true,
   },
