@@ -14,9 +14,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <Head>
-        <base href="/LottoStats-Web/" />
-      </Head>
       <body className="antialiased">
         {children}
       </body>
