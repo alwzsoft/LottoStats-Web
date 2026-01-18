@@ -1,5 +1,7 @@
 'use client';
 
+console.log("페이지 렌더링 시작");
+
 import { useState, useEffect } from 'react';
 
 interface Stats {
