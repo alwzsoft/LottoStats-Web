@@ -131,7 +131,7 @@ export default function LottoPage() {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('/lotto_stats.json');
+      const response = await fetch('/LottoStats-Web/lotto_stats.json');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
