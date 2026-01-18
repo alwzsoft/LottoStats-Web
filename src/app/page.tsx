@@ -386,7 +386,7 @@ export default function LottoPage() {
                       <span className="relative">
                         {num}
                         {/* 스파크 효과 */}
-                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
+                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full animate-ping shadow-lg"></div>
                       </span>
                     ) : '?'}
                   </div>
