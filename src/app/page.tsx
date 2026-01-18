@@ -300,41 +300,43 @@ export default function LottoPage() {
           </div>
         )}
 
-        {/* 번호 생성 버튼 */}
-        <div className="text-center mb-4">
-          {isInitialLoading || generating ? (
-            <div className="relative px-6 py-3 bg-gray-400 text-gray-200 rounded-full font-bold text-sm shadow-2xl cursor-not-allowed overflow-hidden">
-              {/* 전체 배경을 로딩 바처럼 채우는 효과 */}
-              <div
-                className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-300 rounded-full transition-all duration-1000 ease-out"
-                style={{ width: isInitialLoading ? `${(processStep + 1) * 20}%` : '100%' }}
-              ></div>
-              <div className="relative z-10">
-                {isInitialLoading && processStep === 0 ? '🔄 System Loading...' :
-                 processStep === 1 ? '[SYSTEM] Data Load Complete...' :
-                 processStep === 2 ? '[SYSTEM] Frequency Matrix Computing...' :
-                 processStep === 3 ? '[SYSTEM] Pattern Noise Removal Complete...' :
-                 processStep === 4 ? '[SYSTEM] Opt. Combination Top 1 Extracted.' :
-                 '🔄 Generating...'}
+        {/* 번호 생성 버튼 - 추천 번호 생성 후에는 숨김 */}
+        {!hasGenerated && (
+          <div className="text-center mb-4">
+            {isInitialLoading || generating ? (
+              <div className="relative px-6 py-3 bg-gray-400 text-gray-200 rounded-full font-bold text-sm shadow-2xl cursor-not-allowed overflow-hidden">
+                {/* 전체 배경을 로딩 바처럼 채우는 효과 */}
+                <div
+                  className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-300 rounded-full transition-all duration-1000 ease-out"
+                  style={{ width: isInitialLoading ? `${(processStep + 1) * 20}%` : '100%' }}
+                ></div>
+                <div className="relative z-10">
+                  {isInitialLoading && processStep === 0 ? '🔄 System Loading...' :
+                   processStep === 1 ? '[SYSTEM] Data Load Complete...' :
+                   processStep === 2 ? '[SYSTEM] Frequency Matrix Computing...' :
+                   processStep === 3 ? '[SYSTEM] Pattern Noise Removal Complete...' :
+                   processStep === 4 ? '[SYSTEM] Opt. Combination Top 1 Extracted.' :
+                   '🔄 Generating...'}
+                </div>
               </div>
-            </div>
-          ) : showingAd ? (
-            <button
-              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-bold text-lg shadow-2xl cursor-not-allowed"
-              disabled={true}
-            >
-              ⚡ Extracting...
-            </button>
-          ) : (
-            <button
-              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-bold text-lg hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-2xl disabled:opacity-50 disabled:transform-none"
-              onClick={generateRecommendation}
-              disabled={generating || showingAd || hasGenerated}
-            >
-              {hasGenerated ? '🎉 추천 번호 🎉' : '🎲 번호 생성하기'}
-            </button>
-          )}
-        </div>
+            ) : showingAd ? (
+              <button
+                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-bold text-lg shadow-2xl cursor-not-allowed"
+                disabled={true}
+              >
+                ⚡ Extracting...
+              </button>
+            ) : (
+              <button
+                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-bold text-lg hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-2xl disabled:opacity-50 disabled:transform-none"
+                onClick={generateRecommendation}
+                disabled={generating || showingAd}
+              >
+                🎲 번호 생성하기
+              </button>
+            )}
+          </div>
+        )}
 
         {/* 광고 표시 */}
         {showingAd && (
@@ -350,11 +352,16 @@ export default function LottoPage() {
         {/* 추천 번호 애니메이션 */}
         {recommendation && !showingAd && (
           <div className="bg-white rounded-2xl shadow-xl p-6 mb-4">
-            <div className="flex justify-center gap-4">
+            {/* 추천 번호 타이틀 */}
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-800">🎉 추천 번호 🎉</h2>
+            </div>
+            {/* 번호들 - 반응형 레이아웃 */}
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
               {recommendation.numbers.map((num, index) => (
                 <div
                   key={index}
-                  className={`w-14 h-14 rounded-full flex items-center justify-center font-bold text-3xl text-white shadow-2xl transform transition-all duration-700 ${
+                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center font-bold text-2xl sm:text-3xl text-white shadow-2xl transform transition-all duration-700 flex-shrink-0 ${
                     visibleNumbers.includes(num)
                       ? `${getNumberColor(num)} scale-110 animate-bounce`
                       : 'bg-gray-300'
