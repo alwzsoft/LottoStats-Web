@@ -287,7 +287,7 @@ export default function LottoPage() {
             {/* TOP 7 번호 표시 - 2줄 레이아웃 (위 4개, 아래 3개) */}
             <div>
               <h3 className="text-xl font-semibold mb-4 text-center text-gray-700">🏆 가장 많이 나온 번호 TOP 7</h3>
-              <div className="grid grid-cols-4 gap-3 justify-center">
+              <div className="grid grid-cols-4 gap-3 place-items-center">
                 {stats.frequency.slice(0, 7).map((item, index) => (
                   <div key={item[0]} className={`${getNumberColor(item[0])} text-white w-14 h-14 rounded-full flex flex-col items-center justify-center font-bold shadow-lg transform hover:scale-110 transition-transform animate-fade-in`}
                        style={{ animationDelay: `${index * 0.2}s` }}>
@@ -357,7 +357,7 @@ export default function LottoPage() {
               <h2 className="text-2xl font-bold text-gray-800">🎉 추천 번호 🎉</h2>
             </div>
             {/* 번호들 - 2줄 레이아웃 (위 3개, 아래 3개) */}
-            <div className="grid grid-cols-3 gap-4 sm:gap-6 justify-center">
+            <div className="grid grid-cols-3 gap-4 sm:gap-6 place-items-center">
               {recommendation.numbers.map((num, index) => (
                 <div
                   key={index}
