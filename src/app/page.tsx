@@ -357,7 +357,7 @@ export default function LottoPage() {
               <h2 className="text-2xl font-bold text-gray-800">🎉 추천 번호 🎉</h2>
             </div>
             {/* 번호들 - 반응형 레이아웃 */}
-            <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
               {recommendation.numbers.map((num, index) => (
                 <div
                   key={index}
