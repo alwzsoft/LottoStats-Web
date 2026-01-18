@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Head from "next/head";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,9 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <head>
+      <Head>
         <base href="/LottoStats-Web/" />
-      </head>
+      </Head>
       <body className="antialiased">
         {children}
       </body>
