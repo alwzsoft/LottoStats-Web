@@ -2,7 +2,6 @@
 const nextConfig = {
   output: 'export',
   distDir: 'docs',
-  basePath: '/LottoStats-Web',
   trailingSlash: true,
   images: {
     unoptimized: true,
