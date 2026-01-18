@@ -2,9 +2,9 @@
 const nextConfig = {
   output: 'export',
   distDir: 'docs',
-  // GitHub Pages 저장소 이름에 맞게 설정
-  basePath: '/LottoStats-Web', 
-  assetPrefix: '/LottoStats-Web/', // 이 줄을 추가하세요! (끝에 / 포함)
+  basePath: '/LottoStats-Web',
+  // assetPrefix를 basePath와 동일하게 맞추거나, 빈 값으로 두어 basePath를 따르게 합니다.
+  assetPrefix: 'https://alwzsoft.github.io/LottoStats-Web/', 
   images: {
     unoptimized: true,
   },
