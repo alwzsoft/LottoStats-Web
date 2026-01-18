@@ -2,9 +2,8 @@
 const nextConfig = {
   output: 'export',
   distDir: 'docs',
-  basePath: '/LottoStats-Web',
-  // assetPrefix를 basePath와 동일하게 맞추거나, 빈 값으로 두어 basePath를 따르게 합니다.
-  assetPrefix: 'https://alwzsoft.github.io/LottoStats-Web/', 
+  // basePath: '/LottoStats-Web', // 로컬 테스트용으로 주석 처리
+  // assetPrefix: 'https://alwzsoft.github.io/LottoStats-Web/', // 로컬 테스트용으로 주석 처리
   images: {
     unoptimized: true,
   },
