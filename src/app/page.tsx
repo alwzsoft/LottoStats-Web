@@ -240,7 +240,7 @@ export default function LottoPage() {
 
         {/* 통계 카드 */}
         {stats && (
-          <div className="bg-white rounded-2xl shadow-xl p-4 mb-4 transform hover:scale-105 transition-transform duration-300">
+          <div className="bg-white rounded-2xl shadow-xl p-4 mb-4">
             {/* 콤팩트한 데이터 대시보드 */}
             <div className="w-full max-w-sm bg-white text-gray-900 p-4 rounded-2xl shadow-2xl mb-6 mx-auto border border-gray-200">
               <div className="flex justify-between items-center mb-3">
