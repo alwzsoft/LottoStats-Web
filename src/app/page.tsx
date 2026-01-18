@@ -373,7 +373,7 @@ export default function LottoPage() {
 
                   {/* 번호 원 */}
                   <div
-                    className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center font-bold text-2xl sm:text-3xl text-white shadow-2xl transform transition-all duration-700 relative z-10 ${
+                    className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center font-bold text-2xl sm:text-3xl text-white shadow-2xl transform transition-all duration-700 relative ${
                       visibleNumbers.includes(num)
                         ? `${getNumberColor(num)} scale-110 animate-circuit-spark`
                         : 'bg-gray-300'
@@ -382,13 +382,17 @@ export default function LottoPage() {
                       animationDelay: visibleNumbers.includes(num) ? `${index * 0.8}s` : '0s'
                     }}
                   >
-                    {visibleNumbers.includes(num) ? (
-                      <span className="relative">
-                        {num}
-                        {/* 스파크 효과 */}
-                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full animate-ping shadow-lg"></div>
-                      </span>
-                    ) : '?'}
+                    {/* 스파크 효과 - 번호 뒤에 배치 */}
+                    {visibleNumbers.includes(num) && (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-full animate-ping opacity-80 shadow-2xl"></div>
+                      </div>
+                    )}
+
+                    {/* 번호 텍스트 - 스파크 위에 배치 */}
+                    <span className="relative z-10">
+                      {visibleNumbers.includes(num) ? num : '?'}
+                    </span>
                   </div>
 
                   {/* 전기 흐름 효과 */}
