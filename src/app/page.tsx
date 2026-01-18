@@ -352,6 +352,10 @@ export default function LottoPage() {
         {/* 추천 번호 애니메이션 */}
         {recommendation && !showingAd && (
           <div className="bg-white rounded-2xl shadow-xl p-6 mb-4">
+            {/* 추천 번호 타이틀 */}
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-800">🎉 추천 번호 🎉</h2>
+            </div>
             <div className="flex flex-wrap justify-center gap-4 sm:gap-6 place-items-center">
               {recommendation.numbers.map((num, index) => (
                 <div
