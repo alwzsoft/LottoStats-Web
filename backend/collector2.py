@@ -70,7 +70,7 @@ def collect_lotto_stats():
             json.dump(stats, f, ensure_ascii=False, indent=2)
 
         # 5. 경로 복사 (public 및 docs 폴더 모두 대응)
-        target_paths = ['../public/lotto_stats.json', '../docs/lotto_stats.json']
+        target_paths = ['../public/lotto_stats.json', '../docs/lotto_stats.json', '../lotto_stats.json']
         
         for path in target_paths:
             # 절대 경로 계산
