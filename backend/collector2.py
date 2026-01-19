@@ -24,7 +24,6 @@ def collect_lotto_stats():
         
         raw_json = response.json()
 
-        # 1. 데이터 리스트 추출
         data_list = []
         if isinstance(raw_json, dict) and 'data' in raw_json:
             inner_data = raw_json['data']
@@ -38,7 +37,6 @@ def collect_lotto_stats():
         all_numbers = []
         latest_draw = 0
         
-        # 2. 데이터 파싱
         for item in data_list:
             try:
                 draw_no = int(item.get('ltEpsd', 0))
@@ -49,20 +47,16 @@ def collect_lotto_stats():
                     int(item.get('tm1WnNo', 0)), int(item.get('tm2WnNo', 0)), 
                     int(item.get('tm3WnNo', 0)), int(item.get('tm4WnNo', 0)), 
                     int(item.get('tm5WnNo', 0)), int(item.get('tm6WnNo', 0)),
-                    int(item.get('bnsWnNo', 0)) # 보너스 포함
+                    int(item.get('bnsWnNo', 0))
                 ]
                 all_numbers.extend([n for n in draw_numbers if 1 <= n <= 45])
             except (KeyError, TypeError, ValueError):
                 continue
 
-        # 3. 빈도수 집계 및 정렬 (핵심 수정 부분)
         counts = Counter(all_numbers)
-        
-        # [번호, 횟수] 리스트를 만든 후, '횟수(x[1])'를 기준으로 내림차순(reverse=True) 정렬
         frequency = [[i, counts.get(i, 0)] for i in range(1, 46)]
         frequency.sort(key=lambda x: x[1], reverse=True) 
 
-        # 4. 결과 JSON 구조 생성 (요청하신 양식과 100% 일치)
         stats = {
             "total_draws": len(data_list),
             "latest_draw": latest_draw,
@@ -70,16 +64,27 @@ def collect_lotto_stats():
             "last_updated": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         }
 
-        # 5. 파일 저장 및 복사
+        # 4. JSON 파일 저장
         file_name = 'lotto_stats.json'
         with open(file_name, 'w', encoding='utf-8') as f:
             json.dump(stats, f, ensure_ascii=False, indent=2)
 
-        if os.path.exists('../public'):
-            shutil.copy(file_name, '../public/lotto_stats.json')
-            print("데이터를 ../public/lotto_stats.json 경로로 복사했습니다.")
+        # 5. 경로 복사 (public 및 docs 폴더 모두 대응)
+        target_paths = ['../public/lotto_stats.json', '../docs/lotto_stats.json']
+        
+        for path in target_paths:
+            # 절대 경로 계산
+            abs_path = os.path.abspath(os.path.join(os.getcwd(), path))
+            target_dir = os.path.dirname(abs_path)
+            
+            # 폴더가 존재하는지 확인 후 복사
+            if os.path.exists(target_dir):
+                shutil.copy(file_name, abs_path)
+                print(f"데이터를 {path} 경로로 복사했습니다.")
+            else:
+                print(f"경고: {target_dir} 폴더가 존재하지 않아 복사를 건너뜁니다.")
 
-        print(f"성공! 최신 회차: {latest_draw}회 (빈도수 내림차순 정렬 완료)")
+        print(f"성공! 최신 회차: {latest_draw}회")
         return stats
 
     except Exception as e:
